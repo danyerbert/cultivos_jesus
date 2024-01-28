@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 17-01-2024 a las 20:56:38
--- Versión del servidor: 5.7.36
--- Versión de PHP: 7.1.33
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 28-01-2024 a las 07:23:18
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,18 +27,15 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `auditoria_sistema_riego`
 --
 
-DROP TABLE IF EXISTS `auditoria_sistema_riego`;
-CREATE TABLE IF NOT EXISTS `auditoria_sistema_riego` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `auditoria_sistema_riego` (
+  `id` int(11) NOT NULL,
   `auditoria_humedad` float(4,2) NOT NULL,
   `auditoria_temperatura` float(4,2) NOT NULL,
   `tiempo_riego` int(11) NOT NULL,
-  `fecha_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp(),
   `sistema_riego_id` int(11) NOT NULL,
-  `litros_agua_hora` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `sistema_riego_id` (`sistema_riego_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=80 DEFAULT CHARSET=utf8;
+  `litros_agua_hora` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Volcado de datos para la tabla `auditoria_sistema_riego`
@@ -131,17 +128,14 @@ INSERT INTO `auditoria_sistema_riego` (`id`, `auditoria_humedad`, `auditoria_tem
 -- Estructura de tabla para la tabla `auditoria_temp_hum`
 --
 
-DROP TABLE IF EXISTS `auditoria_temp_hum`;
-CREATE TABLE IF NOT EXISTS `auditoria_temp_hum` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `auditoria_temp_hum` (
+  `id` int(11) NOT NULL,
   `auditoria_humedad` float(4,2) NOT NULL,
   `auditoria_temperatura` float(4,2) NOT NULL,
   `sensor_temp_hum_id` int(11) NOT NULL,
-  `estatus` tinyint(1) NOT NULL DEFAULT '1',
-  `fecha_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `sensor_temp_hum_id` (`sensor_temp_hum_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=51070 DEFAULT CHARSET=utf8;
+  `estatus` tinyint(1) NOT NULL DEFAULT 1,
+  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Volcado de datos para la tabla `auditoria_temp_hum`
@@ -51275,9 +51269,8 @@ INSERT INTO `auditoria_temp_hum` (`id`, `auditoria_humedad`, `auditoria_temperat
 -- Estructura de tabla para la tabla `consulta`
 --
 
-DROP TABLE IF EXISTS `consulta`;
-CREATE TABLE IF NOT EXISTS `consulta` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `consulta` (
+  `id` int(11) NOT NULL,
   `nombre_cultivo` varchar(30) NOT NULL,
   `nombre_cientifico` varchar(30) NOT NULL,
   `familia` varchar(30) NOT NULL,
@@ -51289,9 +51282,8 @@ CREATE TABLE IF NOT EXISTS `consulta` (
   `distancia_plantas` int(11) DEFAULT NULL,
   `siembra_directa` varchar(1) DEFAULT NULL,
   `siembra_trasplante` varchar(1) DEFAULT NULL,
-  `fecha_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -51299,25 +51291,18 @@ CREATE TABLE IF NOT EXISTS `consulta` (
 -- Estructura de tabla para la tabla `cultivos`
 --
 
-DROP TABLE IF EXISTS `cultivos`;
-CREATE TABLE IF NOT EXISTS `cultivos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `cultivos` (
+  `id` int(11) NOT NULL,
   `nombre` varchar(30) NOT NULL,
   `usuario_id` int(11) NOT NULL,
-  `estatus` tinyint(1) NOT NULL DEFAULT '1',
-  `fecha_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `estatus` tinyint(1) NOT NULL DEFAULT 1,
+  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp(),
   `sensor_humedad_id` int(11) NOT NULL,
   `inicio_cultivo_id` int(11) NOT NULL,
   `sistema_riego_id` int(11) NOT NULL,
   `ubicacion` varchar(30) NOT NULL,
-  `infcultivos_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `usuario_id` (`usuario_id`),
-  KEY `sensor_humedad_id` (`sensor_humedad_id`),
-  KEY `sistema_riego_id` (`sistema_riego_id`),
-  KEY `inicio_cultivo_id` (`inicio_cultivo_id`),
-  KEY `infcultivos_id` (`infcultivos_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+  `infcultivos_id` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Volcado de datos para la tabla `cultivos`
@@ -51336,17 +51321,14 @@ INSERT INTO `cultivos` (`id`, `nombre`, `usuario_id`, `estatus`, `fecha_registro
 -- Estructura de tabla para la tabla `epocacultivo`
 --
 
-DROP TABLE IF EXISTS `epocacultivo`;
-CREATE TABLE IF NOT EXISTS `epocacultivo` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `epocacultivo` (
+  `id` int(11) NOT NULL,
   `inf_cultivos_id` int(11) NOT NULL,
   `inicio_cultivo` int(11) NOT NULL,
   `fin_cultivo` int(11) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1',
-  `fecha_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `inf_cultivos_id` (`inf_cultivos_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Volcado de datos para la tabla `epocacultivo`
@@ -51384,14 +51366,11 @@ INSERT INTO `epocacultivo` (`id`, `inf_cultivos_id`, `inicio_cultivo`, `fin_cult
 -- Estructura de tabla para la tabla `historial_inicio_sesion`
 --
 
-DROP TABLE IF EXISTS `historial_inicio_sesion`;
-CREATE TABLE IF NOT EXISTS `historial_inicio_sesion` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `fecha_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `usuario_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `usuario_id` (`usuario_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=77 DEFAULT CHARSET=utf8;
+CREATE TABLE `historial_inicio_sesion` (
+  `id` int(11) NOT NULL,
+  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp(),
+  `usuario_id` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Volcado de datos para la tabla `historial_inicio_sesion`
@@ -51473,7 +51452,8 @@ INSERT INTO `historial_inicio_sesion` (`id`, `fecha_registro`, `usuario_id`) VAL
 (73, '2023-01-17 15:37:53', 2),
 (74, '2023-01-17 18:57:10', 2),
 (75, '2023-01-17 18:58:14', 2),
-(76, '2023-01-22 15:03:35', 2);
+(76, '2023-01-22 15:03:35', 2),
+(77, '2024-01-28 05:49:24', 13);
 
 -- --------------------------------------------------------
 
@@ -51481,9 +51461,8 @@ INSERT INTO `historial_inicio_sesion` (`id`, `fecha_registro`, `usuario_id`) VAL
 -- Estructura de tabla para la tabla `inf_cultivos`
 --
 
-DROP TABLE IF EXISTS `inf_cultivos`;
-CREATE TABLE IF NOT EXISTS `inf_cultivos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `inf_cultivos` (
+  `id` int(11) NOT NULL,
   `nombre_cultivo` varchar(30) NOT NULL,
   `ciclo_dias` varchar(30) DEFAULT NULL,
   `rendimiento` varchar(30) DEFAULT NULL,
@@ -51491,11 +51470,9 @@ CREATE TABLE IF NOT EXISTS `inf_cultivos` (
   `distancia_plantas` int(11) DEFAULT NULL,
   `siembra_directa` varchar(1) DEFAULT NULL,
   `siembra_trasplante` varchar(1) DEFAULT NULL,
-  `fecha_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `litros_agua_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `litros_agua_id` (`litros_agua_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp(),
+  `litros_agua_id` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Volcado de datos para la tabla `inf_cultivos`
@@ -51533,14 +51510,12 @@ INSERT INTO `inf_cultivos` (`id`, `nombre_cultivo`, `ciclo_dias`, `rendimiento`,
 -- Estructura de tabla para la tabla `litros_agua_min`
 --
 
-DROP TABLE IF EXISTS `litros_agua_min`;
-CREATE TABLE IF NOT EXISTS `litros_agua_min` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `litros_agua_min` (
+  `id` int(11) NOT NULL,
   `auditoria_litros_min` float(4,2) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1',
-  `fecha_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Volcado de datos para la tabla `litros_agua_min`
@@ -51555,13 +51530,11 @@ INSERT INTO `litros_agua_min` (`id`, `auditoria_litros_min`, `status`, `fecha_re
 -- Estructura de tabla para la tabla `meses`
 --
 
-DROP TABLE IF EXISTS `meses`;
-CREATE TABLE IF NOT EXISTS `meses` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `meses` (
+  `id` int(11) NOT NULL,
   `nombre` varchar(30) NOT NULL,
-  `fecha_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Volcado de datos para la tabla `meses`
@@ -51587,12 +51560,10 @@ INSERT INTO `meses` (`id`, `nombre`, `fecha_registro`) VALUES
 -- Estructura de tabla para la tabla `roles`
 --
 
-DROP TABLE IF EXISTS `roles`;
-CREATE TABLE IF NOT EXISTS `roles` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `Nombre` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+CREATE TABLE `roles` (
+  `id` int(11) NOT NULL,
+  `Nombre` varchar(50) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Volcado de datos para la tabla `roles`
@@ -51609,15 +51580,13 @@ INSERT INTO `roles` (`id`, `Nombre`) VALUES
 -- Estructura de tabla para la tabla `sensor_temp_hum`
 --
 
-DROP TABLE IF EXISTS `sensor_temp_hum`;
-CREATE TABLE IF NOT EXISTS `sensor_temp_hum` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `sensor_temp_hum` (
+  `id` int(11) NOT NULL,
   `numero_bien_nacional` int(11) NOT NULL,
   `descripcion` varchar(50) NOT NULL,
-  `estatus` tinyint(1) NOT NULL DEFAULT '1',
-  `fecha_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  `estatus` tinyint(1) NOT NULL DEFAULT 1,
+  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Volcado de datos para la tabla `sensor_temp_hum`
@@ -51633,15 +51602,13 @@ INSERT INTO `sensor_temp_hum` (`id`, `numero_bien_nacional`, `descripcion`, `est
 -- Estructura de tabla para la tabla `sistema_riego`
 --
 
-DROP TABLE IF EXISTS `sistema_riego`;
-CREATE TABLE IF NOT EXISTS `sistema_riego` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `sistema_riego` (
+  `id` int(11) NOT NULL,
   `descripcion` varchar(50) NOT NULL,
   `numero_bien_nacional` int(11) NOT NULL,
-  `estatus` tinyint(1) NOT NULL DEFAULT '1',
-  `fecha_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  `estatus` tinyint(1) NOT NULL DEFAULT 1,
+  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Volcado de datos para la tabla `sistema_riego`
@@ -51657,14 +51624,12 @@ INSERT INTO `sistema_riego` (`id`, `descripcion`, `numero_bien_nacional`, `estat
 -- Estructura de tabla para la tabla `tipocultivo`
 --
 
-DROP TABLE IF EXISTS `tipocultivo`;
-CREATE TABLE IF NOT EXISTS `tipocultivo` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tipocultivo` (
+  `id` int(11) NOT NULL,
   `nombre` varchar(30) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1',
-  `fecha_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Volcado de datos para la tabla `tipocultivo`
@@ -51683,9 +51648,8 @@ INSERT INTO `tipocultivo` (`id`, `nombre`, `status`, `fecha_registro`) VALUES
 -- Estructura de tabla para la tabla `usuarios`
 --
 
-DROP TABLE IF EXISTS `usuarios`;
-CREATE TABLE IF NOT EXISTS `usuarios` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `usuarios` (
+  `id` int(11) NOT NULL,
   `nombres` varchar(50) NOT NULL,
   `apellidos` varchar(50) NOT NULL,
   `tipo_documento` int(10) NOT NULL,
@@ -51693,12 +51657,10 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `correo` varchar(50) NOT NULL,
   `usuario` varchar(50) NOT NULL,
   `contrasena` varchar(50) NOT NULL,
-  `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `estatus` int(11) NOT NULL DEFAULT '1',
-  `rol_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `rol_id` (`rol_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+  `fecha_registro` timestamp NULL DEFAULT current_timestamp(),
+  `estatus` int(11) NOT NULL DEFAULT 1,
+  `rol_id` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
@@ -51707,7 +51669,196 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 INSERT INTO `usuarios` (`id`, `nombres`, `apellidos`, `tipo_documento`, `documento_identidad`, `correo`, `usuario`, `contrasena`, `fecha_registro`, `estatus`, `rol_id`) VALUES
 (1, 'Rosa     ', 'Garate     ', 1, 448448, 'rosa@gmail.com     ', 'rosa14781  ', 'e10adc3949ba59abbe56e057f20f883e', '2022-07-31 04:00:00', 1, 2),
 (12, 'Julio', 'Ramirez', 1, 987654, 'julio@gmail.com', 'julio123', 'e10adc3949ba59abbe56e057f20f883e', '2022-12-02 12:55:53', 1, 3),
-(2, 'Rafael ', 'Betancourt      ', 1, 123456, 'rafael@gmail.com      ', 'rafabg', 'e10adc3949ba59abbe56e057f20f883e', '2022-11-14 05:58:15', 1, 1);
+(2, 'Rafael ', 'Betancourt      ', 1, 123456, 'rafael@gmail.com      ', 'rafabg', 'e10adc3949ba59abbe56e057f20f883e', '2022-11-14 05:58:15', 1, 1),
+(13, 'Danyerbert Jose', 'Rangel Brito', 1, 27047631, 'danyerbert@gmail.com', 'dan27047631', 'e10adc3949ba59abbe56e057f20f883e', '2024-01-28 05:49:06', 1, 1),
+(14, 'Yasmin Esperanza ', 'Brito Caraballo', 1, 12916293, 'yasmin@gmail.com', 'yasmin', 'e10adc3949ba59abbe56e057f20f883e', '2024-01-28 05:55:53', 1, 2);
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `auditoria_sistema_riego`
+--
+ALTER TABLE `auditoria_sistema_riego`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sistema_riego_id` (`sistema_riego_id`);
+
+--
+-- Indices de la tabla `auditoria_temp_hum`
+--
+ALTER TABLE `auditoria_temp_hum`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sensor_temp_hum_id` (`sensor_temp_hum_id`);
+
+--
+-- Indices de la tabla `consulta`
+--
+ALTER TABLE `consulta`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `cultivos`
+--
+ALTER TABLE `cultivos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `usuario_id` (`usuario_id`),
+  ADD KEY `sensor_humedad_id` (`sensor_humedad_id`),
+  ADD KEY `sistema_riego_id` (`sistema_riego_id`),
+  ADD KEY `inicio_cultivo_id` (`inicio_cultivo_id`),
+  ADD KEY `infcultivos_id` (`infcultivos_id`);
+
+--
+-- Indices de la tabla `epocacultivo`
+--
+ALTER TABLE `epocacultivo`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `inf_cultivos_id` (`inf_cultivos_id`);
+
+--
+-- Indices de la tabla `historial_inicio_sesion`
+--
+ALTER TABLE `historial_inicio_sesion`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `usuario_id` (`usuario_id`);
+
+--
+-- Indices de la tabla `inf_cultivos`
+--
+ALTER TABLE `inf_cultivos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `litros_agua_id` (`litros_agua_id`);
+
+--
+-- Indices de la tabla `litros_agua_min`
+--
+ALTER TABLE `litros_agua_min`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `meses`
+--
+ALTER TABLE `meses`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `sensor_temp_hum`
+--
+ALTER TABLE `sensor_temp_hum`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `sistema_riego`
+--
+ALTER TABLE `sistema_riego`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `tipocultivo`
+--
+ALTER TABLE `tipocultivo`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `rol_id` (`rol_id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `auditoria_sistema_riego`
+--
+ALTER TABLE `auditoria_sistema_riego`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+
+--
+-- AUTO_INCREMENT de la tabla `auditoria_temp_hum`
+--
+ALTER TABLE `auditoria_temp_hum`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51070;
+
+--
+-- AUTO_INCREMENT de la tabla `consulta`
+--
+ALTER TABLE `consulta`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `cultivos`
+--
+ALTER TABLE `cultivos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de la tabla `epocacultivo`
+--
+ALTER TABLE `epocacultivo`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT de la tabla `historial_inicio_sesion`
+--
+ALTER TABLE `historial_inicio_sesion`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+
+--
+-- AUTO_INCREMENT de la tabla `inf_cultivos`
+--
+ALTER TABLE `inf_cultivos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT de la tabla `litros_agua_min`
+--
+ALTER TABLE `litros_agua_min`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `meses`
+--
+ALTER TABLE `meses`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT de la tabla `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de la tabla `sensor_temp_hum`
+--
+ALTER TABLE `sensor_temp_hum`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `sistema_riego`
+--
+ALTER TABLE `sistema_riego`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `tipocultivo`
+--
+ALTER TABLE `tipocultivo`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
