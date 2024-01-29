@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,18 +10,19 @@
     <link href="https://cdn.lineicons.com/3.0/lineicons.css" rel="stylesheet">
 </head>
 <nav>
-<img class="logo" src="imagenes/universidad.png">
-<img align="right" class="logo" src="imagenes/logo.png">
+    <img class="logo" src="imagenes/universidad.png">
+    <img align="right" class="logo" src="imagenes/logo.png">
 </nav>
+
 <body>
     <div class="contenedor_principal">
 
         <div class="caja__fondo">
 
             <div class="caja__fondo-recuperacion">
-            <h3>Iniciar Sesion</h3>
-            <p>Sistema de Información Integral para el Control del Proceso de Riego de Cultivos</p>
-            <button id="iniciar_sesion">Iniciar Sesion</button>
+                <h3>Iniciar Sesion</h3>
+                <p>Sistema de Información Integral para el Control del Proceso de Riego de Cultivos</p>
+                <button id="iniciar_sesion">Iniciar Sesion</button>
             </div>
 
             <div class="caja__fondo-login">
@@ -34,7 +35,9 @@
         <div class="contenedor_login">
             <form action="php/login_usuario.php" method="post" class="formulario_login">
                 <h2>Iniciar Sesión</h2>
-                <input type="text" placeholder="Usuario" name="usuario">
+                <input type="text" placeholder="Usuario" name="usuario" pattern="[a-z0-9]{4,20}" maxlenth="20">
+                <!-- <input type="password" placeholder="Contraseña" name="contrasena" id="Contrasena"
+                    pattern="(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}" maxlenth="16"> -->
                 <input type="password" placeholder="Contraseña" name="contrasena" id="Contrasena">
                 <img src="imagenes/mostrar.png" class=iconomostrar id="Ojo">
                 <button>Ingresar</button>
@@ -57,4 +60,5 @@
     <script src="js/mostrarcontrasena.js"></script>
     <script src="js/recuperar_contrasena.js"></script>
 </body>
+
 </html>
